@@ -1,5 +1,6 @@
 import random
 
+# function to create the game board
 def create_board(size):
     board = []
     for i in range(size):
@@ -7,42 +8,67 @@ def create_board(size):
         board.append(row)
     return board
 
+# function to print the game board
 def print_board(board):
     for row in board:
         print(" ".join(row))
 
-def random_row(board):
-    return random.randint(0, len(board) - 1)
+# function to place the ships randomly on the board
+def place_ships(board, num_ships):
+    for i in range(num_ships):
+        ship_row = random.randint(0, len(board) - 1)
+        ship_col = random.randint(0, len(board[0]) - 1)
+        board[ship_row][ship_col] = "S"
 
-def random_col(board):
-    return random.randint(0, len(board[0]) - 1)
+# function to check if the user's guess is on the board
+def valid_guess(guess, size):
+    row, col = guess
+    return 0 <= row < size and 0 <= col < size
 
-def play_battleships(size):
+# function to check if the user's guess is a hit or a miss
+def check_guess(guess, board):
+    row, col = guess
+    if board[row][col] == "S":
+        return "hit"
+    elif board[row][col] == "X":
+        return "already guessed"
+    else:
+        return "miss"
+
+# function to update the board with the user's guess
+def update_board(guess, board):
+    row, col = guess
+    if board[row][col] == "S":
+        board[row][col] = "X"
+        return True
+    else:
+        board[row][col] = "."
+        return False
+
+# main function to run the game
+def play_battleships():
+    size = int(input("Enter the size of the game board: "))
+    num_ships = int(input("Enter the number of ships: "))
     board = create_board(size)
-    print("Let's play Battleships!")
+    place_ships(board, num_ships)
     print_board(board)
-    ship_row = random_row(board)
-    ship_col = random_col(board)
-
-    for turn in range(4):
-        print("Turn", turn + 1)
-        guess_row = int(input("Guess Row: "))
-        guess_col = int(input("Guess Col: "))
-
-        if guess_row == ship_row and guess_col == ship_col:
-            print("Congratulations! You sank my battleship!")
-            break
+    num_guesses = 0
+    while True:
+        guess_str = input("Enter your guess (row, col): ")
+        guess = tuple(map(int, guess_str.split(",")))
+        if not valid_guess(guess, size):
+            print("Invalid guess. Try again.")
+            continue
+        result = check_guess(guess, board)
+        if result == "already guessed":
+            print("You already guessed that spot. Try again.")
+            continue
+        num_guesses += 1
+        if update_board(guess, board):
+            print("Hit!")
+            if all(all(c != "S" for c in row) for row in board):
+                print("Congratulations! You sank all the battleships in", num_guesses, "guesses.")
+                break
         else:
-            if guess_row not in range(size) or \
-               guess_col not in range(size):
-                print("Oops, that's not even in the ocean.")
-            elif board[guess_row][guess_col] == "X":
-                print("You guessed that one already.")
-            else:
-                print("You missed my battleship!")
-                board[guess_row][guess_col] = "X"
-            print_board(board)
-            if turn == 3:
-                print("Game Over")
+            print("Miss.")
 
-play_battleships(5)
