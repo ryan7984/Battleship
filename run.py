@@ -25,7 +25,7 @@ This function will place the ships randomly on the board
 def place_ships(board,num_ships):
     for i in range(num_ships):
         ship_row = random.randint(0, len(board) - 1)
-        ship_col = random.randint(0, len(board[0] - 1)
+        ship_col = random.randint(0, len(board[0]) - 1)
         board[ship_row][ship_col] = "S"
 
 """
@@ -58,7 +58,7 @@ def check_guess(guess, board):
     def update_board(guess, board):
         row, col=guess
         if board[row][col] == "S":
-            board[row][col] = "X":
+            board[row][col] = "X"
             return True 
         else:
             board[row][col] ="."
