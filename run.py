@@ -8,8 +8,7 @@ This function creates the board for the game.
 def create_board(size):
     board = []
     for i in range(size):
-
-        row = ["0"] * size
+        row = ["0"]* size
         board.append(row)
     return board    
 
@@ -69,7 +68,7 @@ def check_guess(guess, board):
 
 
 """
-This function wil update the board with the users guess
+This function will update the board with the users guess
 """
 
 
@@ -110,18 +109,9 @@ def play_battleships():
         if update_board(guess, board):
             print("Hit!")
             if all(all(c != "S" for c in row) for row in board):
-                print("Congratulations! You sank all the battleships in", 
+                print("Congratulations! You sank all the battleships in",
                       num_guesses, "guesses.")
                 break
 
-        else:
+        else:   
             print("Miss.")
-
-
-
-
-
-
-
-
-
