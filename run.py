@@ -4,7 +4,7 @@ import random
 This function creates the board for the game.
 """
 
-def game_board(size):
+def create_board(size):
     board = []
     for i in range(size):
         row = ["0"]* size
@@ -65,7 +65,7 @@ def check_guess(guess, board):
             return False
 
 """
-This is the main function to run the game where the payer enters the game
+This is the main function to run the game where the player enters the game
 board size, the number of ships and there guess.
 """
 
