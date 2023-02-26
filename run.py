@@ -64,7 +64,36 @@ def check_guess(guess, board):
             board[row][col] ="."
             return False
 
-            
+"""
+This is the main function to run the game.
+"""
+
+def play_battleships():
+    size= int(input("Enter the size of the game board:"))
+    num_ships = int(input("Enter the number of ships:"))
+    board = create_board(size)
+    place_ships(board, num_ships)
+    print_board(board)
+    num_guesses = 0
+    while True:
+        guess_str = input("Enter your guess (row, col): " )
+        guess = tuple(map(int, guess_str.split(",")))
+        if not valid_guess(guess, size):
+            print("Invalid guess. Try again.")
+            continue
+        result = check guess(guess, board)
+        if result == "already guessed":
+            print(You already guessed that spot. Try again")
+            continue
+        num_guesses +=1
+        if update_board(guess, board):
+            print("Hit!")
+            if all (all(c != "S" for c in row) for row in board):
+                print("Congratulations! You sank all the battleships in" , num_guesses, "guesses.")
+                break
+
+        else:
+            print("Miss.")
 
 
 
