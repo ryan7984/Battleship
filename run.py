@@ -52,6 +52,20 @@ def check_guess(guess, board):
     else:
         return "miss"
 
+    """
+    This function wil update the board with the users guess
+    """
+    def update_board(guess, board):
+        row, col=guess
+        if board[row][col] == "S":
+            board[row][col] = "X":
+            return True 
+        else:
+            board[row][col] ="."
+            return False
+
+            
+
 
 
 
